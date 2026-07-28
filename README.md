@@ -1,6 +1,6 @@
 # OXCE Custom UI Mods
 
-Ruleset mods used to demonstrate and regression-test the custom GUI schema
+Ruleset mods used to demonstrate and test the custom GUI schema
 framework developed for OpenXcom Extended 8.6.0.
 
 The framework build targets OXCE 8.6.0 for XPiratez v0.1 compatibility. These
