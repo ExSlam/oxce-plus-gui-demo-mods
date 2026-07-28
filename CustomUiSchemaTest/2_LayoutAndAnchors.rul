@@ -1,0 +1,292 @@
+customUis:
+  - id: CUI_TEST_LAYOUT
+    title: STR_CUI_TEST_LAYOUT_TITLE
+    context: geoscape
+    interface: geoscape
+    backgroundImage: BACK01.SCR
+    width: 286
+    height: 166
+    position: { anchor: center, x: -6, y: 4 }
+    values:
+      scalarChoice: { type: string, default: STR_CUI_TEST_SCALAR_ONE }
+      focusedText: { type: string, default: "" }
+    widgets:
+      - id: explanation
+        type: label
+        x: 10
+        y: 27
+        width: 266
+        height: 26
+        text: STR_CUI_TEST_LAYOUT_TEXT
+        wordWrap: true
+        overflow: vertical
+        align: left
+        colors:
+          default: { text: 239 }
+
+      - id: layeringCaption
+        type: label
+        x: 10
+        y: 55
+        width: 266
+        height: 18
+        text: STR_CUI_TEST_LAYERING_CAPTION
+        overflow: vertical
+        align: center
+        colors:
+          default: { text: 138 }
+
+      - id: bottomLayer
+        type: label
+        x: 18
+        y: 75
+        width: 145
+        height: 16
+        text: STR_CUI_TEST_OVERLAP_BOTTOM
+        big: true
+        align: left
+        colors:
+          default: { text: 138 }
+
+      - id: topLayer
+        type: label
+        x: 122
+        y: 80
+        width: 145
+        height: 16
+        text: STR_CUI_TEST_OVERLAP_TOP
+        big: true
+        align: left
+        colors:
+          default: { text: 133 }
+
+      - id: scalarDropdown
+        type: dropdown
+        x: 10
+        y: 98
+        width: 86
+        height: 15
+        bind: scalarChoice
+        options:
+          - STR_CUI_TEST_SCALAR_ONE
+          - STR_CUI_TEST_SCALAR_TWO
+
+      - id: focusedText
+        type: textInput
+        x: 100
+        y: 98
+        width: 90
+        height: 15
+        bind: focusedText
+        placeholder: STR_CUI_TEST_FOCUSED_PLACEHOLDER
+        maxLength: 12
+        focused: true
+
+      - id: selectedButton
+        type: button
+        x: 194
+        y: 98
+        width: 82
+        height: 15
+        text: STR_CUI_TEST_SELECTED_BUTTON
+        selected: true
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 246, text: 239 }
+          focused: { background: 246, text: 133 }
+          selected: { background: 2, text: 239 }
+
+      - id: leftAligned
+        type: label
+        x: 10
+        y: 116
+        width: 82
+        height: 10
+        text: STR_CUI_TEST_ALIGN_LEFT
+        align: left
+
+      - id: centerAligned
+        type: label
+        x: 102
+        y: 116
+        width: 82
+        height: 10
+        text: STR_CUI_TEST_ALIGN_CENTER
+        align: center
+
+      - id: rightAligned
+        type: label
+        x: 194
+        y: 116
+        width: 82
+        height: 10
+        text: STR_CUI_TEST_ALIGN_RIGHT
+        align: right
+
+      - id: richNested
+        type: label
+        x: 10
+        y: 128
+        width: 266
+        height: 18
+        text: STR_CUI_TEST_NESTED_COLORS
+        wordWrap: true
+        overflow: vertical
+        align: center
+        colors:
+          default: { text: 239 }
+
+      - id: close
+        type: button
+        x: 93
+        y: 147
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_BACK
+        action: close
+
+  - id: CUI_TEST_ANCHOR_INDEX
+    title: STR_CUI_TEST_ANCHOR_INDEX_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 272
+    height: 150
+    position: { anchor: center, x: 0, y: 0 }
+    actions:
+      topLeft: { type: openCustomUi, target: CUI_TEST_ANCHOR_TOP_LEFT, mode: push }
+      top: { type: openCustomUi, target: CUI_TEST_ANCHOR_TOP, mode: push }
+      topRight: { type: openCustomUi, target: CUI_TEST_ANCHOR_TOP_RIGHT, mode: push }
+      left: { type: openCustomUi, target: CUI_TEST_ANCHOR_LEFT, mode: push }
+      center: { type: openCustomUi, target: CUI_TEST_ANCHOR_CENTER, mode: push }
+      right: { type: openCustomUi, target: CUI_TEST_ANCHOR_RIGHT, mode: push }
+      bottomLeft: { type: openCustomUi, target: CUI_TEST_ANCHOR_BOTTOM_LEFT, mode: push }
+      bottom: { type: openCustomUi, target: CUI_TEST_ANCHOR_BOTTOM, mode: push }
+      bottomRight: { type: openCustomUi, target: CUI_TEST_ANCHOR_BOTTOM_RIGHT, mode: push }
+    widgets:
+      - id: help
+        type: label
+        x: 10
+        y: 27
+        width: 252
+        height: 19
+        text: STR_CUI_TEST_ANCHOR_INDEX_TEXT
+        wordWrap: true
+        align: center
+
+      - { id: topLeft, type: button, x: 10, y: 50, width: 78, height: 16, text: STR_CUI_TEST_TOP_LEFT, action: topLeft }
+      - { id: top, type: button, x: 97, y: 50, width: 78, height: 16, text: STR_CUI_TEST_TOP, action: top }
+      - { id: topRight, type: button, x: 184, y: 50, width: 78, height: 16, text: STR_CUI_TEST_TOP_RIGHT, action: topRight }
+      - { id: left, type: button, x: 10, y: 70, width: 78, height: 16, text: STR_CUI_TEST_LEFT, action: left }
+      - { id: center, type: button, x: 97, y: 70, width: 78, height: 16, text: STR_CUI_TEST_CENTER, action: center, focused: true }
+      - { id: right, type: button, x: 184, y: 70, width: 78, height: 16, text: STR_CUI_TEST_RIGHT, action: right }
+      - { id: bottomLeft, type: button, x: 10, y: 90, width: 78, height: 16, text: STR_CUI_TEST_BOTTOM_LEFT, action: bottomLeft }
+      - { id: bottom, type: button, x: 97, y: 90, width: 78, height: 16, text: STR_CUI_TEST_BOTTOM, action: bottom }
+      - { id: bottomRight, type: button, x: 184, y: 90, width: 78, height: 16, text: STR_CUI_TEST_BOTTOM_RIGHT, action: bottomRight }
+
+      - id: close
+        type: button
+        x: 86
+        y: 122
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_BACK
+        action: close
+
+  - id: CUI_TEST_ANCHOR_TOP_LEFT
+    title: STR_CUI_TEST_TOP_LEFT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: topLeft, x: 2, y: 2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_POSITIVE, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_TOP
+    title: STR_CUI_TEST_TOP_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: top, x: 5, y: 2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_TOP_RIGHT
+    title: STR_CUI_TEST_TOP_RIGHT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: topRight, x: -2, y: 2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_LEFT
+    title: STR_CUI_TEST_LEFT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: left, x: 2, y: -4 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_CENTER
+    title: STR_CUI_TEST_CENTER_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: center, x: 5, y: -4 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_RIGHT
+    title: STR_CUI_TEST_RIGHT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: right, x: -2, y: 4 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_BOTTOM_LEFT
+    title: STR_CUI_TEST_BOTTOM_LEFT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: bottomLeft, x: 2, y: -2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_BOTTOM
+    title: STR_CUI_TEST_BOTTOM_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: bottom, x: -5, y: -2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_MIXED, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }
+
+  - id: CUI_TEST_ANCHOR_BOTTOM_RIGHT
+    title: STR_CUI_TEST_BOTTOM_RIGHT_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 104
+    height: 58
+    position: { anchor: bottomRight, x: -2, y: -2 }
+    widgets:
+      - { id: marker, type: label, x: 5, y: 26, width: 94, height: 9, text: STR_CUI_TEST_OFFSET_NEGATIVE, align: center }
+      - { id: close, type: button, x: 22, y: 39, width: 60, height: 14, text: STR_CUI_TEST_BACK, action: close, focused: true }

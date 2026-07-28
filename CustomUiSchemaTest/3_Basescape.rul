@@ -1,0 +1,215 @@
+customUis:
+  - id: CUI_TEST_BASESCAPE
+    title: STR_CUI_TEST_BASESCAPE_TITLE
+    context: basescape
+    interface: basescape
+    width: 312
+    height: 190
+    autoScrollbars: true
+    position: { anchor: right, x: -4, y: 0 }
+    values:
+      itemSearch: { type: string, default: "" }
+      itemSort: { type: string, default: name }
+      itemDescending: { type: bool, default: false }
+      selectedItem: { type: string, default: "" }
+    actions:
+      selectedItemAction: { type: script }
+      openProviders: { type: openCustomUi, target: CUI_TEST_PROVIDER_GALLERY, mode: push }
+      openStores: { type: openNativeUi, target: stores, mode: push }
+      openMain: { type: openCustomUi, target: CUI_TEST_MAIN, mode: push }
+    scripts:
+      customUiAction: |
+        if eq action_id "selectedItemAction";
+          ui.setWidgetText ui "status" selected_record_id;
+        end;
+        return;
+    widgets:
+      - id: help
+        type: label
+        x: 8
+        y: 26
+        width: 296
+        height: 18
+        text: STR_CUI_TEST_BASESCAPE_TEXT
+        wordWrap: true
+        align: center
+        colors:
+          default: { text: "#70d6ff" }
+
+      - id: itemSearch
+        type: search
+        x: 8
+        y: 47
+        width: 296
+        height: 14
+        bind: itemSearch
+        placeholder: STR_CUI_TEST_ITEM_SEARCH
+        maxLength: 28
+
+      - id: itemTable
+        type: table
+        x: 8
+        y: 64
+        width: 296
+        height: 76
+        source:
+          type: items
+          scope: currentBase
+          includeZero: false
+        search: itemSearch
+        selectedValue: selectedItem
+        sortValue: itemSort
+        descendingValue: itemDescending
+        columns:
+          - { field: name, header: STR_CUI_TEST_SORT_NAME, width: 174 }
+          - { field: quantity, header: STR_CUI_TEST_SORT_QUANTITY, width: 58, align: right }
+          - { field: sellCost, header: STR_CUI_TEST_SORT_VALUE, width: 58, align: right }
+        onSelect: selectedItemAction
+
+      - id: status
+        type: label
+        x: 8
+        y: 143
+        width: 296
+        height: 10
+        text: STR_CUI_TEST_SELECT_ITEM
+        align: center
+        colors:
+          default: { text: "#f4d35e" }
+
+      - id: providers
+        type: button
+        x: 8
+        y: 160
+        width: 70
+        height: 16
+        text: STR_CUI_TEST_PROVIDERS_BUTTON
+        action: openProviders
+        focused: true
+
+      - id: stores
+        type: button
+        x: 82
+        y: 160
+        width: 70
+        height: 16
+        text: STR_CUI_TEST_STORES_BUTTON
+        action: openStores
+
+      - id: geoMain
+        type: button
+        x: 156
+        y: 160
+        width: 70
+        height: 16
+        text: STR_CUI_TEST_GEO_BUTTON
+        action: openMain
+
+      - id: close
+        type: button
+        x: 230
+        y: 160
+        width: 74
+        height: 16
+        text: STR_CUI_TEST_CLOSE
+        action: close
+
+  - id: CUI_TEST_PROVIDER_GALLERY
+    title: STR_CUI_TEST_PROVIDER_GALLERY_TITLE
+    context: basescape
+    interface: basescape
+    width: 312
+    height: 194
+    autoScrollbars: true
+    position: { anchor: bottom, x: 0, y: -3 }
+    values:
+      selectedSoldier: { type: string, default: "" }
+      selectedCraft: { type: string, default: "" }
+    actions:
+      selectedRecordAction: { type: script }
+    scripts:
+      customUiAction: |
+        if eq action_id "selectedRecordAction";
+          ui.setWidgetText ui "status" selected_record_id;
+        end;
+        return;
+    widgets:
+      - id: explanation
+        type: label
+        x: 8
+        y: 25
+        width: 296
+        height: 17
+        text: STR_CUI_TEST_PROVIDER_GALLERY_TEXT
+        wordWrap: true
+        align: center
+
+      - id: basesList
+        type: list
+        x: 8
+        y: 44
+        width: 296
+        height: 35
+        source: bases
+        sortBy: name
+        selectable: false
+        columns:
+          - { field: name, width: 138 }
+          - { field: soldiers, width: 50, align: right }
+          - { field: scientists, width: 50, align: right }
+          - { field: engineers, width: 50, align: right }
+
+      - id: soldiersTable
+        type: table
+        x: 8
+        y: 82
+        width: 296
+        height: 35
+        source: { type: soldiers, scope: all }
+        selectedValue: selectedSoldier
+        sortBy: rank
+        columns:
+          - { field: name, width: 114 }
+          - { field: rank, width: 62 }
+          - { field: base, width: 70 }
+          - { field: kills, width: 42, align: right }
+        onSelect: selectedRecordAction
+
+      - id: craftsTable
+        type: table
+        x: 8
+        y: 120
+        width: 296
+        height: 35
+        source:
+          type: crafts
+          scope: currentBase
+        selectedValue: selectedCraft
+        sortBy: name
+        columns:
+          - { field: name, width: 104 }
+          - { field: status, width: 74 }
+          - { field: fuel, width: 54, align: right }
+          - { field: damage, width: 56, align: right }
+        onSelect: selectedRecordAction
+
+      - id: status
+        type: label
+        x: 8
+        y: 158
+        width: 296
+        height: 10
+        text: STR_CUI_TEST_PROVIDER_STATUS
+        align: center
+        colors:
+          default: { text: "#70d6ff" }
+
+      - id: close
+        type: button
+        x: 106
+        y: 173
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_BACK
+        action: close
+        focused: true

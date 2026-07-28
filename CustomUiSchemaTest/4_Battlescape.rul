@@ -1,0 +1,138 @@
+customUis:
+  - id: CUI_TEST_BATTLESCAPE
+    title: STR_CUI_TEST_BATTLESCAPE_TITLE
+    context: battlescape
+    interface: battlescape
+    backgroundImage: TAC00.SCR
+    width: 304
+    height: 184
+    autoScrollbars: true
+    position: { anchor: bottom, x: 0, y: -4 }
+    values:
+      battleToggle: { type: bool, default: false }
+      battleNumber: { type: int, default: 3 }
+      battleChoice: { type: string, default: name }
+      battleDescending: { type: bool, default: false }
+      selectedSoldier: { type: string, default: "" }
+    actions:
+      battleChanged: { type: script }
+      soldierSelected: { type: script }
+      openMain: { type: openCustomUi, target: CUI_TEST_MAIN, mode: push }
+      openUfopaedia: { type: openNativeUi, target: ufopaedia, mode: push }
+    scripts:
+      customUiAction: |
+        if eq action_id "battleChanged";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_BATTLE_CHANGED";
+        else eq action_id "soldierSelected";
+          ui.setWidgetText ui "status" selected_record_id;
+        end;
+        return;
+    widgets:
+      - id: heading
+        type: label
+        x: 8
+        y: 25
+        width: 288
+        height: 20
+        text: STR_CUI_TEST_BATTLESCAPE_TEXT
+        big: true
+        wordWrap: true
+        align: center
+        colors:
+          default: { text: "#70d6ff" }
+
+      - id: battleToggle
+        type: toggle
+        x: 8
+        y: 48
+        width: 140
+        height: 15
+        text: STR_CUI_TEST_BATTLE_TOGGLE
+        bind: battleToggle
+        onChange: battleChanged
+        colors:
+          default: { background: 96, text: "#ffffff" }
+          hover: { background: 112, text: "#fff2a8" }
+          focused: { background: 80, text: "#70d6ff" }
+          selected: { background: 64, text: "#ffffff" }
+
+      - id: battleNumber
+        type: number
+        x: 152
+        y: 48
+        width: 62
+        height: 15
+        bind: battleNumber
+        minimum: 0
+        maximum: 9
+        step: 1
+        largeStep: 3
+        wrap: true
+        mouseWheel: true
+        onChange: battleChanged
+
+      - id: sortHint
+        type: label
+        x: 218
+        y: 48
+        width: 78
+        height: 15
+        text: STR_CUI_TEST_SORT_HINT_SHORT
+        align: center
+
+      - id: soldiers
+        type: table
+        x: 8
+        y: 66
+        width: 288
+        height: 64
+        source: { type: soldiers, scope: currentBase }
+        selectedValue: selectedSoldier
+        sortValue: battleChoice
+        descendingValue: battleDescending
+        columns:
+          - { field: name, header: STR_CUI_TEST_SORT_NAME, width: 120 }
+          - { field: rank, header: STR_CUI_TEST_SORT_RANK, width: 64 }
+          - { field: missions, header: STR_CUI_TEST_MISSIONS, width: 48, align: right }
+          - { field: kills, header: STR_CUI_TEST_SORT_KILLS, width: 48, align: right }
+        onChange: battleChanged
+        onSelect: soldierSelected
+
+      - id: status
+        type: label
+        x: 8
+        y: 133
+        width: 288
+        height: 10
+        text: STR_CUI_TEST_BATTLE_STATUS
+        align: center
+        colors:
+          default: { text: "#f4d35e" }
+
+      - id: main
+        type: button
+        x: 8
+        y: 153
+        width: 88
+        height: 16
+        text: STR_CUI_TEST_GEO_BUTTON
+        action: openMain
+        focused: true
+
+      - id: ufopaedia
+        type: button
+        x: 108
+        y: 153
+        width: 88
+        height: 16
+        text: STR_CUI_TEST_UFOPAEDIA_BUTTON
+        action: openUfopaedia
+
+      - id: close
+        type: button
+        x: 208
+        y: 153
+        width: 88
+        height: 16
+        text: STR_CUI_TEST_CLOSE
+        action: close

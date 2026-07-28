@@ -1,0 +1,8 @@
+name: "Custom UI Cross-Mod Companion"
+id: CustomUiSchemaCompanion
+version: 0.5.0
+description: "Provides a second-mod destination for the custom GUI navigation test."
+author: ExSlam
+master: "*"
+requiredExtendedEngine: Extended
+requiredExtendedVersion: 8.6.0

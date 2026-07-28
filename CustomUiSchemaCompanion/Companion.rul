@@ -1,0 +1,42 @@
+customUis:
+  - id: CUI_TEST_COMPANION
+    title: STR_CUI_TEST_COMPANION_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 250
+    height: 112
+    position: { anchor: center, x: 9, y: -6 }
+    actions:
+      returnToMain:
+        type: openCustomUi
+        target: CUI_TEST_MAIN
+        mode: replace
+    widgets:
+      - id: message
+        type: label
+        x: 12
+        y: 29
+        width: 226
+        height: 38
+        text: STR_CUI_TEST_COMPANION_TEXT
+        wordWrap: true
+        align: center
+        colors:
+          default: { text: "#70d6ff" }
+      - id: replaceMain
+        type: button
+        x: 20
+        y: 79
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_COMPANION_REPLACE
+        action: returnToMain
+        focused: true
+      - id: back
+        type: button
+        x: 130
+        y: 79
+        width: 100
+        height: 16
+        text: STR_CUI_COMPANION_BACK
+        action: close

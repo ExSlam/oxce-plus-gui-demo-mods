@@ -1,0 +1,596 @@
+customUis:
+  - id: CUI_TEST_MAIN
+    title: STR_CUI_TEST_MAIN_TITLE
+    context: geoscape
+    interface: geoscape
+    backgroundImage: BACK01.SCR
+    width: 320
+    height: 200
+    autoScrollbars: true
+    position:
+      anchor: center
+      x: 0
+      y: 0
+    values:
+      enabled: { type: bool, default: true }
+      amount: { type: int, default: 5 }
+      playerText: { type: string, default: "" }
+      researchSearch: { type: string, default: "" }
+      sortField: { type: string, default: name }
+      descending: { type: bool, default: false }
+      selectedResearch: { type: string, default: "" }
+    scripts:
+      customUiAction: |
+        var int amountValue;
+        var text enteredText;
+        if eq action_id "runScript";
+          ui.getInt ui amountValue "amount";
+          ui.getText ui "playerText" enteredText;
+          add amountValue 1;
+          ui.setInt ui "amount" amountValue;
+          ui.setText ui "sortField" "status";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_SCRIPT_RAN";
+          ui.refresh ui "researchTable";
+        else eq action_id "inputChanged";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_INPUT_CHANGED";
+        else eq action_id "formSubmitted";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_FORM_SUBMITTED";
+        else eq action_id "settingsChanged";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_SETTING_CHANGED";
+        else eq action_id "refreshSearch";
+          ui.refresh ui "researchTable";
+          ui.setWidgetText ui "status" "STR_CUI_TEST_SEARCH_REFRESHED";
+        else eq action_id "selectedRow";
+          ui.setWidgetText ui "status" selected_record_id;
+        end;
+        return;
+    widgets:
+      - id: heading
+        type: label
+        x: 8
+        y: 24
+        width: 304
+        height: 16
+        text: STR_CUI_TEST_RICH_HEADING
+        big: true
+        align: center
+        colors:
+          default: { text: 138 }
+
+      - id: mainExplanation
+        type: label
+        x: 8
+        y: 40
+        width: 304
+        height: 32
+        text: STR_CUI_TEST_MAIN_EXPLANATION
+        overflow: vertical
+        autoScrollbar: true
+        align: left
+        colors:
+          default: { text: 239 }
+
+      - id: toggleLabel
+        type: label
+        x: 8
+        y: 73
+        width: 70
+        height: 8
+        text: STR_CUI_TEST_TOGGLE_LABEL
+        align: center
+        colors:
+          default: { text: 133 }
+
+      - id: textInputLabel
+        type: label
+        x: 82
+        y: 73
+        width: 88
+        height: 8
+        text: STR_CUI_TEST_TEXT_INPUT_LABEL
+        align: center
+        colors:
+          default: { text: 133 }
+
+      - id: numberLabel
+        type: label
+        x: 174
+        y: 73
+        width: 56
+        height: 8
+        text: STR_CUI_TEST_NUMBER_LABEL
+        align: center
+        colors:
+          default: { text: 133 }
+
+      - id: enabled
+        type: toggle
+        x: 8
+        y: 82
+        width: 70
+        height: 14
+        text: STR_CUI_TEST_ENABLED
+        bind: enabled
+        onChange: settingsChanged
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 246, text: 239 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: playerText
+        type: textInput
+        x: 82
+        y: 82
+        width: 88
+        height: 14
+        bind: playerText
+        placeholder: STR_CUI_TEST_TEXT_PLACEHOLDER
+        maxLength: 18
+        onChange: inputChanged
+        onSubmit: formSubmitted
+        colors:
+          default: { text: 138 }
+
+      - id: amount
+        type: number
+        x: 174
+        y: 82
+        width: 56
+        height: 14
+        bind: amount
+        minimum: -10
+        maximum: 30
+        step: 2
+        largeStep: 10
+        wrap: true
+        mouseWheel: true
+        onChange: settingsChanged
+        onSubmit: formSubmitted
+        colors:
+          default: { text: 138 }
+
+      - id: researchSearch
+        type: search
+        x: 8
+        y: 98
+        width: 208
+        height: 14
+        bind: researchSearch
+        placeholder: STR_CUI_TEST_SEARCH_PLACEHOLDER
+        maxLength: 32
+        onChange: refreshSearch
+        onSubmit: formSubmitted
+        colors:
+          default: { text: 138 }
+
+      - id: run
+        type: button
+        x: 220
+        y: 98
+        width: 92
+        height: 14
+        text: STR_CUI_TEST_RUN_SCRIPT
+        onClick: runScript
+        focused: true
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: researchTable
+        type: table
+        x: 8
+        y: 114
+        width: 304
+        height: 42
+        source: research
+        search: researchSearch
+        selectedValue: selectedResearch
+        sortValue: sortField
+        descendingValue: descending
+        selectable: true
+        columns:
+          - { field: name, header: STR_CUI_TEST_SORT_NAME, width: 158, align: left }
+          - { field: cost, header: STR_CUI_TEST_SORT_COST, width: 44, align: right }
+          - { field: points, header: STR_CUI_TEST_POINTS, width: 44, align: right }
+          - { field: status, header: STR_CUI_TEST_SORT_STATUS, width: 54, align: center }
+        onChange: settingsChanged
+        onSelect: selectedRow
+        colors:
+          default: { text: 239 }
+
+      - id: status
+        type: label
+        x: 8
+        y: 157
+        width: 304
+        height: 9
+        text: STR_CUI_TEST_STATUS_READY
+        align: center
+        colors:
+          default: { text: 239 }
+
+      - id: details
+        type: button
+        x: 8
+        y: 166
+        width: 58
+        height: 15
+        text: STR_CUI_TEST_SCRIPT_LAB_BUTTON
+        action: openDetails
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: layout
+        type: button
+        x: 69
+        y: 166
+        width: 58
+        height: 15
+        text: STR_CUI_TEST_LAYOUT_BUTTON
+        action: openLayout
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: companion
+        type: button
+        x: 130
+        y: 166
+        width: 58
+        height: 15
+        text: STR_CUI_TEST_COMPANION_BUTTON
+        action: openCompanion
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: techTree
+        type: button
+        x: 191
+        y: 166
+        width: 58
+        height: 15
+        text: STR_CUI_TEST_NATIVE_BUTTON
+        action: openTree
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: replace
+        type: button
+        x: 252
+        y: 166
+        width: 60
+        height: 15
+        text: STR_CUI_TEST_REPLACE_BUTTON
+        action: replaceScreen
+        selected: true
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: anchorGallery
+        type: button
+        x: 8
+        y: 183
+        width: 94
+        height: 15
+        text: STR_CUI_TEST_ANCHORS_BUTTON
+        action: openAnchors
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: help
+        type: button
+        x: 106
+        y: 183
+        width: 98
+        height: 15
+        text: STR_CUI_TEST_HELP_BUTTON
+        action: openHelp
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+      - id: closeLiteral
+        type: button
+        x: 208
+        y: 183
+        width: 104
+        height: 15
+        text: STR_CUI_TEST_CLOSE
+        action: close
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+    actions:
+      runScript: { type: script }
+      inputChanged: { type: script }
+      formSubmitted: { type: script }
+      settingsChanged: { type: script }
+      refreshSearch: { type: script }
+      selectedRow: { type: script }
+      openDetails: { type: openCustomUi, target: CUI_TEST_SCRIPT_LAB, mode: push }
+      openLayout: { type: openCustomUi, target: CUI_TEST_LAYOUT, mode: push }
+      openAnchors: { type: openCustomUi, target: CUI_TEST_ANCHOR_INDEX, mode: push }
+      openHelp: { type: openCustomUi, target: CUI_TEST_MAIN_HELP, mode: push }
+      replaceScreen: { type: openCustomUi, target: CUI_TEST_REPLACE_DESTINATION, mode: replace }
+      openTree: { type: openNativeUi, target: techTree, mode: push }
+      openCompanion: { type: openCustomUi, target: CUI_TEST_COMPANION, mode: push }
+
+  - id: CUI_TEST_MAIN_HELP
+    title: STR_CUI_TEST_MAIN_HELP_TITLE
+    context: geoscape
+    interface: geoscape
+    backgroundImage: BACK01.SCR
+    width: 300
+    height: 180
+    autoScrollbars: true
+    position: { anchor: center, x: 0, y: 0 }
+    actions:
+      closeHelp: { type: close }
+    widgets:
+      - id: mainHelp
+        type: label
+        x: 12
+        y: 27
+        width: 276
+        height: 124
+        text: STR_CUI_TEST_MAIN_HELP_TEXT
+        wordWrap: true
+        colors:
+          default: { text: 239 }
+
+      - id: closeHelpButton
+        type: button
+        x: 100
+        y: 159
+        width: 100
+        height: 15
+        text: STR_CUI_TEST_BACK
+        action: closeHelp
+        focused: true
+        colors:
+          default: { background: 246, text: 138 }
+          hover: { background: 218, text: 138 }
+          focused: { background: 7, text: 138 }
+          selected: { background: 2, text: 239 }
+
+  - id: CUI_TEST_SCRIPT_LAB
+    title: STR_CUI_TEST_SCRIPT_LAB_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 300
+    height: 184
+    autoScrollbars: true
+    position: { anchor: center, x: 4, y: -3 }
+    values:
+      counter: { type: int, default: 1 }
+      message: { type: string, default: initial }
+      flag: { type: bool, default: false }
+      selectedBase: { type: string, default: "" }
+    actions:
+      mutateValues: { type: script }
+      refreshOne: { type: script }
+      refreshAll: { type: script }
+      selectedBaseAction: { type: script }
+      scriptOpen: { type: script }
+      scriptNative: { type: script }
+      scriptClose: { type: script }
+    scripts:
+      customUiAction: |
+        var int counterValue;
+        var int flagValue;
+        var text currentMessage;
+        if eq action_id "mutateValues";
+          ui.getInt ui counterValue "counter";
+          ui.getInt ui flagValue "flag";
+          ui.getText ui "message" currentMessage;
+          add counterValue 1;
+          ui.setInt ui "counter" counterValue;
+          ui.setInt ui "flag" 1;
+          ui.setText ui "message" "changed";
+          ui.setWidgetText ui "scriptStatus" "STR_CUI_TEST_ALL_VALUE_APIS_RAN";
+        else eq action_id "refreshOne";
+          ui.refresh ui "baseList";
+          ui.setWidgetText ui "scriptStatus" "STR_CUI_TEST_REFRESH_ONE_RAN";
+        else eq action_id "refreshAll";
+          ui.refresh ui "";
+          ui.setWidgetText ui "scriptStatus" "STR_CUI_TEST_REFRESH_ALL_RAN";
+        else eq action_id "selectedBaseAction";
+          ui.setWidgetText ui "scriptStatus" selected_record_id;
+        else eq action_id "scriptOpen";
+          ui.open ui "CUI_TEST_SCRIPT_DESTINATION" 0;
+        else eq action_id "scriptNative";
+          ui.openNative ui "ufopaedia" 0;
+        else eq action_id "scriptClose";
+          ui.close ui;
+        end;
+        return;
+    widgets:
+      - id: explanation
+        type: label
+        x: 10
+        y: 26
+        width: 280
+        height: 25
+        text: STR_CUI_TEST_SCRIPT_LAB_TEXT
+        wordWrap: true
+        align: center
+
+      - id: valueReadout
+        type: label
+        x: 10
+        y: 52
+        width: 280
+        height: 11
+        text: STR_CUI_TEST_VALUE_READOUT
+        align: center
+        colors:
+          default: { text: "#f4d35e" }
+
+      - id: baseList
+        type: list
+        x: 10
+        y: 65
+        width: 280
+        height: 48
+        source: bases
+        selectedValue: selectedBase
+        sortBy: name
+        columns:
+          - { field: name, width: 142 }
+          - { field: soldiers, width: 44, align: right }
+          - { field: scientists, width: 44, align: right }
+          - { field: engineers, width: 44, align: right }
+        onSelect: selectedBaseAction
+
+      - id: scriptStatus
+        type: label
+        x: 10
+        y: 115
+        width: 280
+        height: 10
+        text: STR_CUI_TEST_SCRIPT_STATUS
+        align: center
+        colors:
+          default: { text: "#70d6ff" }
+
+      - id: mutate
+        type: button
+        x: 10
+        y: 128
+        width: 88
+        height: 15
+        text: STR_CUI_TEST_MUTATE_BUTTON
+        action: mutateValues
+        focused: true
+
+      - id: one
+        type: button
+        x: 102
+        y: 128
+        width: 88
+        height: 15
+        text: STR_CUI_TEST_REFRESH_ONE_BUTTON
+        action: refreshOne
+
+      - id: all
+        type: button
+        x: 194
+        y: 128
+        width: 96
+        height: 15
+        text: STR_CUI_TEST_REFRESH_ALL_BUTTON
+        action: refreshAll
+
+      - id: scriptOpenButton
+        type: button
+        x: 10
+        y: 147
+        width: 88
+        height: 15
+        text: STR_CUI_TEST_SCRIPT_OPEN_BUTTON
+        action: scriptOpen
+
+      - id: scriptNativeButton
+        type: button
+        x: 102
+        y: 147
+        width: 88
+        height: 15
+        text: STR_CUI_TEST_SCRIPT_NATIVE_BUTTON
+        action: scriptNative
+
+      - id: scriptCloseButton
+        type: button
+        x: 194
+        y: 147
+        width: 96
+        height: 15
+        text: STR_CUI_TEST_SCRIPT_CLOSE_BUTTON
+        action: scriptClose
+
+      - id: ordinaryClose
+        type: button
+        x: 100
+        y: 166
+        width: 100
+        height: 14
+        text: STR_CUI_TEST_BACK
+        action: close
+
+  - id: CUI_TEST_SCRIPT_DESTINATION
+    title: STR_CUI_TEST_SCRIPT_DESTINATION_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 230
+    height: 96
+    position: { anchor: center, x: -8, y: 5 }
+    widgets:
+      - id: message
+        type: label
+        x: 12
+        y: 28
+        width: 206
+        height: 28
+        text: STR_CUI_TEST_SCRIPT_DESTINATION_TEXT
+        wordWrap: true
+        align: center
+      - id: close
+        type: button
+        x: 65
+        y: 67
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_BACK
+        action: close
+        focused: true
+
+  - id: CUI_TEST_REPLACE_DESTINATION
+    title: STR_CUI_TEST_REPLACE_TITLE
+    context: geoscape
+    interface: geoscape
+    width: 246
+    height: 104
+    position: { anchor: center, x: 7, y: 4 }
+    widgets:
+      - id: explanation
+        type: label
+        x: 12
+        y: 29
+        width: 222
+        height: 38
+        text: STR_CUI_TEST_REPLACE_TEXT
+        wordWrap: true
+        align: center
+      - id: close
+        type: button
+        x: 73
+        y: 77
+        width: 100
+        height: 16
+        text: STR_CUI_TEST_CLOSE
+        action: close
+        focused: true

@@ -1,0 +1,5 @@
+en-US:
+  STR_CUI_COMPANION_BACK: "Back"
+  STR_CUI_TEST_COMPANION_TITLE: "Cross-Mod UI Destination"
+  STR_CUI_TEST_COMPANION_TEXT: "This ruleset screen belongs to a separate installed mod. Back proves cross-mod push; Replace main proves cross-mod replace."
+  STR_CUI_TEST_COMPANION_REPLACE: "Replace -> main"
